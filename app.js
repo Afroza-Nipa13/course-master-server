@@ -1,22 +1,19 @@
 import express from "express";
+import cors from "cors";
+import connectDB from "./config/db.js";
 import { userRoutes } from "./routes/user.routes.js";
 import { courseRoutes } from "./routes/course.routes.js";
-import connectDB from "./config/db.js";
-import cors from "cors";
 
 const app = express();
 
-// 🟢 Connect to MongoDB ONLY ONCE — safe for Vercel Serverless
 connectDB()
   .then(() => console.log("✅ MongoDB connected"))
   .catch((err) => console.error("❌ MongoDB connection error:", err.message));
 
-// Middleware
 app.use(
   cors({
-    origin: [
-      "http://localhost:3000",
-       
+    origin: ["http://localhost:3000",
+              "https://course-master-ph.vercel.app"
     ],
     credentials: true,
   })
@@ -25,7 +22,6 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// 🟢 ROOT ROUTE — now works correctly
 app.get("/", (req, res) => {
   return res.status(200).json({
     success: true,
@@ -35,7 +31,6 @@ app.get("/", (req, res) => {
   });
 });
 
-// API route for documentation
 app.get("/api", (req, res) => {
   res.status(200).json({
     success: true,
@@ -45,11 +40,9 @@ app.get("/api", (req, res) => {
   });
 });
 
-// Routes
-app.use("/users", userRoutes);
-app.use("/courses", courseRoutes);
+app.use("/api", userRoutes);
+app.use("/api", courseRoutes);
 
-// 404 Handler
 app.use((req, res) => {
   res.status(404).json({
     success: false,
@@ -57,15 +50,12 @@ app.use((req, res) => {
   });
 });
 
-// Global Error Handler
 app.use((err, req, res, next) => {
   console.error("Server Error:", err);
-
   res.status(err.status || 500).json({
     success: false,
     message: err.message || "Internal server error",
   });
 });
 
-// 🟢 EXPORT EXPRESS APP FOR VERCEL — DO NOT USE app.listen()
 export default app;

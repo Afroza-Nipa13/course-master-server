@@ -2,18 +2,13 @@
   "name": "course-master-server",
   "version": "1.0.0",
   "type": "module",
-  "main": "src/index.js",
+  "main": "index.js",
   "scripts": {
-    "dev": "nodemon ./src/index.js",
-    "start": "node ./src/index.js",
+    "dev": "nodemon index.js",
+    "start": "node index.js",
     "build": "echo 'No build step required for Express'",
-    "vercel-build": "echo 'Building for Vercel'",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "vercel-build": "echo 'Building for Vercel'"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
   "dependencies": {
     "bcrypt": "^6.0.0",
     "cors": "^2.8.5",

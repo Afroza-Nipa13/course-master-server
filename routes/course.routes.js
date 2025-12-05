@@ -6,7 +6,7 @@ import mongoose from "mongoose";
 const router = Router();
 
 // 📌 1. GET ALL COURSES WITH FILTERING, SORTING, PAGINATION, SEARCHING
-router.get("/", async (req, res) => {
+router.get("/courses", async (req, res) => {
   try {
     const {
       page = 1,

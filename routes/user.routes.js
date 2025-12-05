@@ -66,9 +66,10 @@
 // export const userRoutes = router;
 
 import { Router } from "express";
-import User from "../models/user.model.js";
+
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken"; 
+import User from "../models/user.model.js";
 
 const router = Router();
 
@@ -166,7 +167,7 @@ router.post("/login", async (req, res) => {
 });
 
 // ✅ ADD THIS: GET USER BY EMAIL (for NextAuth)
-router.get("/user", async (req, res) => {
+router.get("/users", async (req, res) => {
   try {
     const { email } = req.query;
     
